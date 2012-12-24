@@ -9,6 +9,7 @@ function Player(){
 	this.diplomska;
 	this.base;
 	this.ball;
+	this.map;
 	this.godina = 0;
 	this.sesija;
 	this.sesii = ["Januarska,Junska,Septemvrsika"];
@@ -34,7 +35,7 @@ function Map(h,w,b){
 	this.groupitems = new Group();
 	this.grouptext = new Group();
 	this.predmeti = [];
-	this.ocena;
+	this.ocena = [];
 	this.init = function(predmeti){
 		for(var i = 0; i < predmeti.length; i++){
 			this.predmeti.push(predmeti[i]);
@@ -66,6 +67,12 @@ function Map(h,w,b){
 		var dx = ball.dx;
 		var dy = ball.dy;
 		var r = ball.ball.bounds.width/2;
+		for(var i = 0; i < this.ocena.length; i++){
+			if(this.ocena[i].move()){
+				this.ocena.splice(i,1);
+				i--;
+			}	
+		}
 		for(var i = 0; i < this.groupitems.children.length; i++){
 			var gx = this.groupitems.children[i].bounds.x;
 			var gy = this.groupitems.children[i].bounds.y;
@@ -73,13 +80,17 @@ function Map(h,w,b){
 			var w = this.groupitems.children[i].bounds.width
 			if(!this.predmeti[i].polozen){
 				if((distance(x,y,gx,gy) <= r && dx > 0 && dy > 0) || (distance(x,y,gx + w,gy) <= r && dx < 0 && dy > 0) || (distance(x,y,gx,gy + h) <= r && dx > 0 && dy < 0) || (distance(x,y,gx + w,gy + h) <= r && dx < 0 && dy < 0)){
-					var drop = this.grouptext.children[i].content.split(" - ");
+					if(this.predmeti[i].otvoren){
+						var drop = this.grouptext.children[i].content.split(" - ");
 						if(drop[1] == 0){
-							
+							var ocena = new Oceni();
+							ocena.init(i,gx + w/2,gy + h, 1000);
+							this.ocena.push(ocena);																					
 						}else{
 							drop[1]--;
 						}
 							this.grouptext.children[i].content = drop[0] + " - " + drop[1];
+						}
 							ball.touchLeftOrRightWall();
 							ball.touchBottomOrTopWall();
 							break;	
@@ -87,27 +98,34 @@ function Map(h,w,b){
 				}else {
 				if(((y + r + dy) >= gy) && ((y - r + dy) <= (gy + h))){
 					if(x >= gx && x <= (gx + w)){
+						if(this.predmeti[i].otvoren){
 						var drop = this.grouptext.children[i].content.split(" - ");
 						if(drop[1] == 0){
-							
+							var ocena = new Oceni();
+							ocena.init(i,gx + w/2,gy + h, 1000);
+							this.ocena.push(ocena);							
 						}else{
 							drop[1]--;
 						}
 							this.grouptext.children[i].content = drop[0] + " - " + drop[1];
-							ball.touchBottomOrTopWall();
-							
+						}
+							ball.touchBottomOrTopWall();							
 							break;							
 					}
 				} 
 				if (((x + r + dx) >= gx) && ((x - r + dx) <= (gx + w))){
 					if(y >= gy && y <= (gy + h)){
+						if(this.predmeti[i].otvoren){
 						var drop = this.grouptext.children[i].content.split(" - ");
 						if(drop[1] == 0){
-							
+							var ocena = new Oceni();
+							ocena.init(i,gx + w/2,gy + h, 1000);
+							this.ocena.push(ocena);								
 						}else{
 							drop[1]--;
 						}
 							this.grouptext.children[i].content = drop[0] + " - " + drop[1];
+						}
 							ball.touchLeftOrRightWall();
 							break;							
 					}
@@ -206,4 +224,37 @@ function Base(){
 }
 function distance(x1,y1,x2,y2){
 	return Math.sqrt(((x1-x2)*(x1-x2)) + ((y1-y2)*(y1-y2)))
+}
+function randomOcena(){
+	var randomnumber = Math.floor(Math.random()*11);
+	if(randomnumber < 5) return 5;
+	else if(randomnumber < 6) return 6;
+	else if(randomnumber < 7) return 7;
+	else if(randomnumber < 8) return 8;
+	else if(randomnumber < 9) return 9;
+	else return 10;
+}
+function Oceni(){
+	this.index;
+	this.ocena;
+	this.text;
+	this.limit
+	this.init = function(index,x,y,l){
+		this.limit = l;
+		this.index = index;
+		this.ocena = randomOcena();
+		this.text = new PointText(new Point(x + 5,y+ 5));
+		this.text.fillColor = 'black';
+		this.text.paragraphStyle.justification = 'center';
+		this.text.characterStyle.fontSize = 15;
+		this.text.content = this.ocena;
+	}
+	this.move = function(){
+		this.text.position.y = this.text.position.y + 2;
+		if(this.text.position.y >= this.limit){
+			this.text.remove();
+			return true;
+		}
+		return false;
+	}
 }
