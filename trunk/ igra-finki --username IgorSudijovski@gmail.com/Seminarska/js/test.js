@@ -24,6 +24,14 @@ window.onload = function(){
 		ball.touchWalls(500,1000);
 		map.touchElement(ball);
 	}
+	/*function frame(event){
+		ball.moveBall();
+		ball.checkTouchBase(base);
+		ball.touchWalls(500,1000);
+		map.touchElement(ball);
+		window.view.draw();	
+	}*/
+	
 	tool.onMouseMove = function(event){
 		base.move(event.point.x);
 	}
