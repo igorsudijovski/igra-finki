@@ -1,0 +1,20 @@
+.divbox{
+	border: 3px solid;
+	border-radius: 5px;
+	border-color: #C7CFCA;
+	margin-bottom: 10px;
+	padding: 5px;
+}
+.divizborni{
+	float: left;
+	margin-left: 10px;
+}
+.red{
+	color: red;
+}
+.spanblock{
+	display: block
+}
+.floatleft{
+	float: left;
+}
