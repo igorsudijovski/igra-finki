@@ -1,15 +1,136 @@
 <!DOCTYPE html>
 <html lang="mk">
 <head>
+	
 	<title>Собери ги оценките</title>
 	<meta charset="UTF-8"/>
 	<meta name="description" content="Игра за финки"/>
 	<meta name="keywords" content="Игра,Финки,Забава"/>
+	<link rel="stylesheet" href="css/jquery-ui.css"/>
+	<link rel="stylesheet" href="css/main.css"/>
+	<script type="text/javascript" src="js/vendor/jquery-1.8.3.js"></script>
+	<script type="text/javascript" src="js/vendor/jquery-ui.js"></script>
 	<script type="text/javascript" src="js/vendor/paper.js"></script>
 	<script type="text/javascript" src="js/gameClasses.js"></script>
 	<script type="text/javascript" src="js/test.js"></script>
+
 </head>
 <body>
+	<div id="dialog" title="Одберете предмети">
+		<label for="name">Внесете Име:</label>
+		<input type="text" id="name" class="ui-corner-all"/>
+		<div id="accordion">
+			<h3>Прва година</h3>
+			<div id="prva">
+				<span> Задолжителни:</span>
+				<div class="divbox">
+					<ul type="square">
+						<li><div title="КРС 6">
+							Концепти за развој на софтвер				
+							</div></li>
+						<li><div title="КА1 7">
+							Калкулус 1	
+							</div></li>
+						<li><div title="НРС 6">
+							Напреден развој на софтвер					
+							</div></li>
+						<li><div title="КА2 7">
+							Калкулус 2				
+							</div></li>
+					</ul>
+				</div>
+				<span class="spanblock">Изборни <b class="red">(Одберете точно 6 изборни предмети)</b>: </span>
+				<div title="izborni" class="divbox" style="float:left">
+					<div class="divizborni">
+						<div><input title="ДМ1 5" type="checkbox"/> Дискретна математика 1 </div>
+						<div><input title="ОСИ 4" type="checkbox"/> Основи на софтверско инжинерство </div>
+						<div><input title="ПВ 4" type="checkbox"/> Професионални вештини </div>
+					</div>
+					<div class="divizborni">
+						<div><input title="ДМ2 5" type="checkbox"/> Дискретна математика 2</div>
+						<div><input title="AOK 4" type="checkbox"/> Архитектура и организација на компјутери </div>
+						<div><input title="ВД 4" type="checkbox"/> Веб дизајн </div>
+						<div><input title="КК 5" type="checkbox"/> Компјутерски компоненти </div>												
+					</div>
+				</div>					
+			</div>
+			<h3>Втора година</h3>
+			<div id="vtora">
+				<span> Задолжителни:</span>
+				<div class="divbox">
+					<ul type="square">
+						<li><div title="АПС 6">
+							Алгоритми и податочни структури				
+							</div></li>
+						<li><div title="БС 7">
+							Веројатност и статискита
+							</div></li>
+						<li><div title="БП 6">
+							Бази на податоци					
+							</div></li>
+						<li><div title="ВИ 6">
+							Вештачка интелегенција		
+							</div></li>
+					</ul>
+				</div>
+				<span class="spanblock">Изборни <b class="red">(Одберете точно 6 изборни предмети)</b>: </span>
+				<div title="izborni" class="divbox" style="float:left">
+					<div class="divizborni">
+						<div><input title="ПКК 4" type="checkbox"/> Податочни и компјутерски комуникации </div>
+						<div><input title="БП 5" type="checkbox"/> Визуелно програмирање </div>
+						<div><input title="НП 4" type="checkbox"/> Напредно програмирање </div>
+						<div><input title="Роб 5" type="checkbox"/> Роботика </div>
+						<div><input title="МВ 4" type="checkbox"/> Машинска визија </div>
+					</div>
+					<div class="divizborni">
+						<div><input title="ОС 5" type="checkbox"/> Оперативни системи</div>
+						<div><input title="ДАС 4" type="checkbox"/> Дизајн и архитектура на софтвер</div>
+						<div><input title="НА 5" type="checkbox"/> Напредни алгоритми </div>
+						<div><input title="Ком 4" type="checkbox"/> Компајлери </div>
+						<div><input title="ОКГ 4" type="checkbox"/> Основи на компјутерска графика </div>											
+					</div>
+				</div>	
+			</div>
+			<h3>Трета година</h3>
+			<div id="treta">
+				<span> Задолжителни:</span>
+				<div class="divbox">
+					<ul type="square">
+						<li><div title="МИС 6">
+							Менаџмент на информациони системи			
+							</div></li>
+						<li><div title="ТР 6">
+							Тимска работа
+							</div></li>
+						<li><div title="СИ 7">
+							Софтверско инжинерство					
+							</div></li>
+						<li><div title="МКС 6">
+							Микрокомпјутерски системи	
+							</div></li>
+					</ul>
+				</div>
+				<span class="spanblock">Изборни <b class="red">(Одберете точно 6 изборни предмети)</b>: </span>
+				<div title="izborni" class="divbox" style="float:left">
+					<div class="divizborni">
+						<div><input title="ИС 4" type="checkbox"/> Интелегентни системи </div>
+						<div><input title="РП 5" type="checkbox"/> Рударење на податоци </div>
+						<div><input title="ОПЈ 4" type="checkbox"/> Обработка на природни јазици </div>
+						<div><input title="МУ 4" type="checkbox"/> Машинско учење </div>
+						<div><input title="НБП 5" type="checkbox"/> Напредни бази на податоци </div>
+					</div>
+					<div class="divizborni">
+						<div><input title="КС 4" type="checkbox"/> Компјутерски системи</div>
+						<div><input title="КИ 4" type="checkbox"/> Кориснички интерфејси</div>
+						<div><input title="СС 5" type="checkbox"/> Системски софтвер </div>
+						<div><input title="ППс 4" type="checkbox"/> Паралелно програмирање </div>										
+					</div>
+				</div>
+			</div>
+			<h3>Дипломска</h3>
+			<div id="diplomska"></div>					
+		</div>
+	</div>
 	<canvas id="myCanvas" width="1000" height="500">
 		<p>Вашиот пребарувач не поддржува canvas</p>
 	</canvas>
