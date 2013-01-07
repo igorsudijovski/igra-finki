@@ -13,15 +13,28 @@ function Player(){
 	this.godina = 0;
 	this.sesija;
 	this.sesii = ["Januarska,Junska,Septemvrsika"];
-	this.init = function(map/*predmeti1i,predmeti2i,predmeti3i,predmeti1z,predmeti2z,predmeti3z,diplomska,name,ball,base*/){
-		var test = [];
+	this.init = function(predmeti1i,predmeti2i,predmeti3i,predmeti1z,predmeti2z,predmeti3z,diplomska,name,ball,base,h,w,background){
+		this.map = new Map(h,w,background);
+		this.predmeti1i = predmeti1i;
+		this.predmeti2i = predmeti2i;
+		this.predmeti3i = predmeti3i;
+		this.predmeti1z = predmeti1z;
+		this.predmeti2z = predmeti2z;
+		this.predmeti3z = predmeti3z;
+		this.diplomska = diplomska;
+		this.name = name;
+		this.base = base;
+		this.ball = ball;
+		this.setMap();
+		this.ball.init(400,400);	
+		/*var test = [];
 		for(var i = 0; i <31; i++ ){
 			var p = new Predmet("111","ime",5);
 			p.otvoren = true;
 			test.push(p);
 		}
 		//var map = new Map(200,1000,"#EEEEEE");
-		map.init(test);		
+		map.init(test);*/
 	}
 	this.setMap = function(){
 		var predmeti = [];
