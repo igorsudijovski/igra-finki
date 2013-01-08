@@ -1,7 +1,7 @@
 paper.install(window);
 window.onload = function(){
 	
-	jQuery('tr:nth-child(even)').addClass('alt');
+
 	jQuery("#next").attr('disabled', 'disabled' ).addClass( 'ui-state-disabled' );
 	paper.setup('myCanvas');
 	var accordion = 0;
@@ -14,7 +14,7 @@ window.onload = function(){
 	var ball = new Ball();
 	var tool = new Tool();
 	var base = new Base();
-	var n = 200;
+	var n = 100;
     var odo;
 	jQuery("#end").click(function(){
 		ply.gameOver(true);
@@ -23,10 +23,14 @@ window.onload = function(){
 		n = 0.1
 	})
 	jQuery("#next").click(function(){
-		ply.reinit();
-		draw = true;
-		jQuery("#next").attr('disabled', 'disabled' ).addClass( 'ui-state-disabled' );
-		n = 200;
+		if(ply.end()){
+			jQuery("#next").attr('disabled', 'disabled' ).addClass( 'ui-state-disabled' );
+		}else{
+			ply.reinit();
+			draw = true;
+			jQuery("#next").attr('disabled', 'disabled' ).addClass( 'ui-state-disabled' );
+			n = 100;
+		}		
 	});
 
     function run() {
@@ -59,7 +63,10 @@ window.onload = function(){
 			text: "Потврди",
 			click: function(e){
 				if(accordion == 3){
-					var predmeti1z = [];
+				if(jQuery("#name").val() == "" || jQuery("#diplomskateks").val() == "" || jQuery("#diplomskaKratenka").val().length != 3){
+					alert("Не се пополнети Името, името на дипломската или неправилно е пополнато скратеното име на дипломската");
+				}else{
+				var predmeti1z = [];
 				var zad = jQuery("#prva ul li");
 				for(var i = 0; i < zad.length; i++){
 					var ID = zad[i].firstChild.getAttribute("title");
@@ -130,7 +137,8 @@ window.onload = function(){
 				jQuery("#sesija").text("Сесија: " + ply.sesii[0]);
 				jQuery("#godina").text("Година на полагање: " + ply.godina);
 				run();
-				jQuery(this).dialog("close");											
+				jQuery(this).dialog("close");
+				}										
 				}else{
 					if(accordion == 0){
 						var sum = 0;
@@ -142,6 +150,8 @@ window.onload = function(){
 						}
 						if(sum == 6){
 							jQuery("#accordion").accordion("activate",++accordion);
+						}else{
+							alert("Треба да изберете 6 изборни предмети од 1 година");
 						}
 					}else if(accordion == 1){
 						var sum = 0;
@@ -153,6 +163,8 @@ window.onload = function(){
 						}
 						if(sum == 6){
 							jQuery("#accordion").accordion("activate",++accordion);
+						}else{
+							alert("Треба да изберете 6 изборни предмети од 2 година");
 						}
 					}else{
 						var sum = 0;
@@ -164,6 +176,8 @@ window.onload = function(){
 						}
 						if(sum == 6){
 							jQuery("#accordion").accordion("activate",++accordion);
+						}else{
+							alert("Треба да изберете 6 изборни предмети од 3 година");
 						}
 					}
 									
