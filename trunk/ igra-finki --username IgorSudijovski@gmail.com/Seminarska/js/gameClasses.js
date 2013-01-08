@@ -13,8 +13,21 @@ function Player(){
 	this.godina = 0;
 	this.sesija;
 	this.sesii = ["Januarska,Junska,Septemvrsika"];
+	this.h;
+	this.w;
+	this.gameoverBack;
+	this.gameoverText;
+	this.reinit = function(){
+		this.gameoverBack.remove();
+		this.gameoverText.remove();
+		this.setMap();
+		this.base.init(this.h);
+		this.ball.init(350,350);
+	}
 	this.init = function(predmeti1i,predmeti2i,predmeti3i,predmeti1z,predmeti2z,predmeti3z,diplomska,name,ball,base,h,w,background){
-		this.map = new Map(h,w,background);
+		this.h = h;
+		this.w = w;
+		this.map = new Map(h/3,w,background);
 		this.predmeti1i = predmeti1i;
 		this.predmeti2i = predmeti2i;
 		this.predmeti3i = predmeti3i;
@@ -26,7 +39,7 @@ function Player(){
 		this.base = base;
 		this.ball = ball;
 		this.setMap();
-		this.ball.init(400,400);	
+		this.ball.init(350,350);	
 		/*var test = [];
 		for(var i = 0; i <31; i++ ){
 			var p = new Predmet("111","ime",5);
@@ -36,7 +49,7 @@ function Player(){
 		//var map = new Map(200,1000,"#EEEEEE");
 		map.init(test);*/
 	}
-	this.setMap = function(){
+	this.setMap = function(initial){
 		var predmeti = [];
 		if(this.predmeti1z[0].polozen && this.predmeti1z[1].polozen){
 			this.predmeti2z[0].otvoren = true;
@@ -94,7 +107,69 @@ function Player(){
 		}
 		this.diplomska.otvoren = flag;
 		predmeti[0].otvoren = flag;
-		this.map.init(predmeti);
+			this.map.init(predmeti);	
+	}
+	this.gameOver = function(){
+		if(this.ball.ball.position.y + this.ball.dy >= this.base.base.bounds.y){
+			this.gameoverBack = new Path.Rectangle(new Rectangle(new Point(0,0),new Size(1000,1000)));
+			this.gameoverBack.fillColor = "#EEEEEE";
+			this.gameoverText = new PointText(new Point(10,300));
+			this.gameoverText.fillColor = 'black';
+			this.gameoverText.paragraphStyle.justification = 'left';
+			this.gameoverText.characterStyle.fontSize = 20;
+			this.gameoverText.content = "Сесијата заврши!";
+			this.ball.ball.remove();
+			this.base.base.remove();
+			for(var i = 0; i < this.map.ocena.length; i++){
+				this.map.ocena[i].remove();
+			}
+			this.diplomska = this.map.predmeti[0];
+			for(var i = 1; i <5; i++){
+				this.predmeti3z[i-1] = this.map.predmeti[i];
+				if(this.map.predmeti[i].krediti == 0 && !this.map.predmeti[i].otvoren && !this.map.predmeti[i].polozen){
+					this.predmeti3z[i-1].krediti = this.predmeti3z[i-1].fiksnikrediti;
+					this.predmeti3z[i-1].otvoren = true;
+				}
+			}
+			for(var i = 5; i < 11; i++){
+				this.predmeti3i[i-5] = this.map.predmeti[i];
+				if(this.map.predmeti[i].krediti == 0 && !this.map.predmeti[i].otvoren && !this.map.predmeti[i].polozen){
+					this.predmeti3i[i-5].krediti = this.predmeti3i[i-5].fiksnikrediti;
+					this.predmeti3i[i-5].otvoren = true;
+				}
+			}
+			for(var i = 11; i < 15; i++){
+				this.predmeti2z[i-11] = this.map.predmeti[i];
+				if(this.map.predmeti[i].krediti == 0 && !this.map.predmeti[i].otvoren && !this.map.predmeti[i].polozen){
+					this.predmeti2z[i-11].krediti = this.predmeti2z[i-11].fiksnikrediti;
+					this.predmeti2z[i-11].otvoren = true;
+				}
+			}
+			for(var i = 15; i < 21; i++){
+				this.predmeti2i[i-15] = this.map.predmeti[i];
+				if(this.map.predmeti[i].krediti == 0 && !this.map.predmeti[i].otvoren && !this.map.predmeti[i].polozen){
+					this.predmeti2i[i-15].krediti = this.predmeti2i[i-15].fiksnikrediti;
+					this.predmeti2i[i-15].otvoren = true;
+				}
+			}
+			for(var i = 21; i < 25; i++){
+				this.predmeti1z[i-21] = this.map.predmeti[i];
+				if(this.map.predmeti[i].krediti == 0 && !this.map.predmeti[i].otvoren && !this.map.predmeti[i].polozen){
+					this.predmeti1z[i-21].krediti = this.predmeti1z[i-21].fiksnikrediti;
+					this.predmeti1z[i-21].otvoren = true;
+				}
+			}
+			for(var i = 25; i < 31; i++){
+				this.predmeti1i[i-25] = this.map.predmeti[i];
+				if(this.map.predmeti[i].krediti == 0 && !this.map.predmeti[i].otvoren && !this.map.predmeti[i].polozen){
+					this.predmeti1i[i-25].krediti = this.predmeti1i[i-25].fiksnikrediti;
+					this.predmeti1i[i-25].otvoren = true;
+				}
+			}
+			this.map.removeAllelements();
+			return true;
+		}
+		return false;
 	}
 }
 function Map(h,w,b){
@@ -109,6 +184,15 @@ function Map(h,w,b){
 	this.grouptext = new Group();
 	this.predmeti = [];
 	this.ocena = [];
+	this.dx = 2;
+	this.removeAllelements = function(){
+		this.predmeti = null;
+		this.predmeti = [];
+		this.ocena = null;
+		this.ocena = [];
+		this.groupitems.removeChildren();
+		this.grouptext.removeChildren();
+	}
 	this.poloziPredmet = function(i,ocena){
 		this.groupitems.children[i].fillColor = this.background;
 		this.grouptext.children[i].content = "";
@@ -145,6 +229,15 @@ function Map(h,w,b){
 			}
 		}												
 	}
+	this.moveDiplomska = function(){
+		if(this.groupitems.children[0].bounds.x + this.dx <= 0){
+			this.dx *= -1;
+		}
+		if((this.groupitems.children[0].bounds.x + this.groupitems.children[0].bounds.width + this.dx) >= (this.w * 11)){
+			this.dx *= -1;
+		}
+		this.groupitems.children[0].position.x += this.dx;
+	}
 	this.touchElement = function(ball,baseImg){
 		var y = ball.ball.position.y;
 		var x = ball.ball.position.x;
@@ -180,13 +273,15 @@ function Map(h,w,b){
 					if(this.predmeti[i].otvoren){
 						var drop = this.grouptext.children[i].content.split(" - ");
 						if(drop[1] == 0){
+							this.predmeti[i].krediti = parseInt(drop[1]);
 							var ocena = new Oceni();
-							ocena.init(i,gx + w/2,gy + h, this.h * 8 * 0.90+ 300);
+							ocena.init(i,gx + w/2,gy + h, this.h * 8 * 0.98 * 3 + 4);
 							this.ocena.push(ocena);																					
 						}else{
 							drop[1]--;
 						}
 							this.grouptext.children[i].content = drop[0] + " - " + drop[1];
+							this.predmeti[i].krediti = parseInt(drop[1]);
 						}
 							ball.touchLeftOrRightWall();
 							ball.touchBottomOrTopWall();
@@ -198,13 +293,15 @@ function Map(h,w,b){
 						if(this.predmeti[i].otvoren){
 						var drop = this.grouptext.children[i].content.split(" - ");
 						if(drop[1] == 0){
+							this.predmeti[i].krediti = parseInt(drop[1]);
 							var ocena = new Oceni();
-							ocena.init(i,gx + w/2,gy + h, this.h * 8 * 0.90+ 300);
+							ocena.init(i,gx + w/2,gy + h, this.h * 8 * 0.98 * 3 + 4);
 							this.ocena.push(ocena);							
 						}else{
 							drop[1]--;
 						}
 							this.grouptext.children[i].content = drop[0] + " - " + drop[1];
+							this.predmeti[i].krediti = parseInt(drop[1]);
 						}
 							ball.touchBottomOrTopWall();							
 							break;							
@@ -215,13 +312,15 @@ function Map(h,w,b){
 						if(this.predmeti[i].otvoren){
 						var drop = this.grouptext.children[i].content.split(" - ");
 						if(drop[1] == 0){
+							this.predmeti[i].krediti = parseInt(drop[1]);
 							var ocena = new Oceni();
-							ocena.init(i,gx + w/2,gy + h, this.h * 8 * 0.90 + 300);
+							ocena.init(i,gx + w/2,gy + h, this.h * 8 * 0.98 * 3 + 4);
 							this.ocena.push(ocena);								
 						}else{
 							drop[1]--;
 						}
 							this.grouptext.children[i].content = drop[0] + " - " + drop[1];
+							this.predmeti[i].krediti = parseInt(drop[1]);
 						}
 							ball.touchLeftOrRightWall();
 							break;							
@@ -239,6 +338,7 @@ function Predmet(ID,name,krediti){
 	this.ocena = 5;
 	this.krediti = krediti;
 	this.otvoren = false;
+	this.fiksnikrediti = krediti;
 }
 function Ball(){
 	this.ball;
@@ -313,7 +413,7 @@ function Base(){
 	this.base;
 	this.init = function(h){
 		this.base = new Raster('logo');
-		this.base.position.y = h * 0.9;
+		this.base.position.y = h * 0.95;
 	}
 	this.move = function(corx){
 		this.base.position.x = corx;

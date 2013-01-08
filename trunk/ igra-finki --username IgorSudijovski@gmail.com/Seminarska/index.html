@@ -18,7 +18,7 @@
 <body>
 	<div id="dialog" title="Одберете предмети">
 		<label for="name">Внесете Име:</label>
-		<input type="text" id="name" class="ui-corner-all"/>
+		<input type="text" id="name" value="Igor" class="ui-corner-all"/>
 		<div id="accordion">
 			<h3>Прва година</h3>
 			<div id="prva">
@@ -34,14 +34,14 @@
 				<span class="spanblock">Изборни <b class="red">(Одберете точно 6 изборни предмети)</b>: </span>
 				<div title="izborni" class="divbox" style="float:left">
 					<div class="divizborni">
-						<div><input title="ДМ1 5" type="checkbox"/> Дискретна математика 1 </div>
-						<div><input title="ОСИ 4" type="checkbox"/> Основи на софтверско инжинерство </div>
-						<div><input title="ПВ 4" type="checkbox"/> Професионални вештини </div>
+						<div><input title="ДМ1 5" type="checkbox" checked="checked"/> Дискретна математика 1 </div>
+						<div><input title="ОСИ 4" type="checkbox" checked="checked"/> Основи на софтверско инжинерство </div>
+						<div><input title="ПВ 4" type="checkbox" checked="checked"/> Професионални вештини </div>
 					</div>
 					<div class="divizborni">
-						<div><input title="ДМ2 5" type="checkbox"/> Дискретна математика 2</div>
-						<div><input title="AOK 4" type="checkbox"/> Архитектура и организација на компјутери </div>
-						<div><input title="ВД 4" type="checkbox"/> Веб дизајн </div>
+						<div><input title="ДМ2 5" type="checkbox" checked="checked"/> Дискретна математика 2</div>
+						<div><input title="AOK 4" type="checkbox" checked="checked"/> Архитектура и организација на компјутери </div>
+						<div><input title="ВД 4" type="checkbox" checked="checked"/> Веб дизајн </div>
 						<div><input title="КК 5" type="checkbox"/> Компјутерски компоненти </div>												
 					</div>
 				</div>					
@@ -60,14 +60,14 @@
 				<span class="spanblock">Изборни <b class="red">(Одберете точно 6 изборни предмети)</b>: </span>
 				<div title="izborni" class="divbox" style="float:left">
 					<div class="divizborni">
-						<div><input title="ПКК 4" type="checkbox"/> Податочни и компјутерски комуникации </div>
-						<div><input title="БП 5" type="checkbox"/> Визуелно програмирање </div>
-						<div><input title="НП 4" type="checkbox"/> Напредно програмирање </div>
-						<div><input title="Роб 5" type="checkbox"/> Роботика </div>
-						<div><input title="МВ 4" type="checkbox"/> Машинска визија </div>
+						<div><input title="ПКК 4" type="checkbox" checked="checked"/> Податочни и компјутерски комуникации </div>
+						<div><input title="БП 5" type="checkbox" checked="checked"/> Визуелно програмирање </div>
+						<div><input title="НП 4" type="checkbox" checked="checked"/> Напредно програмирање </div>
+						<div><input title="Роб 5" type="checkbox" checked="checked"/> Роботика </div>
+						<div><input title="МВ 4" type="checkbox" checked="checked"/> Машинска визија </div>
 					</div>
 					<div class="divizborni">
-						<div><input title="ОС 5" type="checkbox"/> Оперативни системи</div>
+						<div><input title="ОС 5" type="checkbox" checked="checked"/> Оперативни системи</div>
 						<div><input title="ДАС 4" type="checkbox"/> Дизајн и архитектура на софтвер</div>
 						<div><input title="НА 5" type="checkbox"/> Напредни алгоритми </div>
 						<div><input title="Ком 4" type="checkbox"/> Компајлери </div>
@@ -89,14 +89,14 @@
 				<span class="spanblock">Изборни <b class="red">(Одберете точно 6 изборни предмети)</b>: </span>
 				<div title="izborni" class="divbox" style="float:left">
 					<div class="divizborni">
-						<div><input title="ИС 4" type="checkbox"/> Интелегентни системи </div>
-						<div><input title="РП 5" type="checkbox"/> Рударење на податоци </div>
-						<div><input title="ОПЈ 4" type="checkbox"/> Обработка на природни јазици </div>
-						<div><input title="МУ 4" type="checkbox"/> Машинско учење </div>
-						<div><input title="НБП 5" type="checkbox"/> Напредни бази на податоци </div>
+						<div><input title="ИС 4" type="checkbox" checked="checked"/> Интелегентни системи </div>
+						<div><input title="РП 5" type="checkbox" checked="checked"/> Рударење на податоци </div>
+						<div><input title="ОПЈ 4" type="checkbox" checked="checked"/> Обработка на природни јазици </div>
+						<div><input title="МУ 4" type="checkbox" checked="checked"/> Машинско учење </div>
+						<div><input title="НБП 5" type="checkbox" checked="checked"/> Напредни бази на податоци </div>
 					</div>
 					<div class="divizborni">
-						<div><input title="КС 4" type="checkbox"/> Компјутерски системи</div>
+						<div><input title="КС 4" type="checkbox" checked="checked"/> Компјутерски системи</div>
 						<div><input title="КИ 4" type="checkbox"/> Кориснички интерфејси</div>
 						<div><input title="СС 5" type="checkbox"/> Системски софтвер </div>
 						<div><input title="ПП 4" type="checkbox"/> Паралелно програмирање </div>										
@@ -107,9 +107,9 @@
 			<div id="diplomska">
 				<div class="divbox">
 				<span>Наслов</span></br>
-				<textarea id="diplomskateks"></textarea></br>
+				<textarea id="diplomskateks" value="nesto"></textarea></br>
 				<span>Кратко име <b class="red">(Треба да содржи точно 3 букви)</b></span></br>
-				<input id="diplomskaKratenka" type="text" pattern="[A-Za-z]{3}"/>
+				<input id="diplomskaKratenka" type="text" pattern="[A-Za-z]{3}" value="nst"/>
 				</div>			
 			</div>					
 		</div>
@@ -117,6 +117,7 @@
 	<canvas id="myCanvas" width="1000" height="600">
 		<p>Вашиот пребарувач не поддржува canvas</p>
 	</canvas>
-	<img id="logo" src="img/logo.jpg"/>
+	<input type="button" id="reinit" value="nova"/>
+	<img id="logo" src="img/logo.jpg" style="z-index: -1; position: absolute; left: 10px; top: 10px"/>
 </body>
 </html>
