@@ -10,19 +10,49 @@ function Player(){
 	this.base;
 	this.ball;
 	this.map;
-	this.godina = 0;
-	this.sesija;
-	this.sesii = ["Januarska,Junska,Septemvrsika"];
+	this.godina = 2013;
+	this.sesija = 0;
+	this.sesii = ["Јануарска","Јунска","Септемвриска"];
 	this.h;
 	this.w;
 	this.gameoverBack;
 	this.gameoverText;
+	this.resetPredmeti = function(){
+		for(var i = 0; i < this.predmeti1i.length; i++){
+			this.predmeti1i[i].krediti = this.predmeti1i[i].fiksnikrediti;
+		}
+		for(var i = 0; i < this.predmeti2i.length; i++){
+			this.predmeti2i[i].krediti = this.predmeti2i[i].fiksnikrediti;
+		}
+		for(var i = 0; i < this.predmeti3i.length; i++){
+			this.predmeti3i[i].krediti = this.predmeti3i[i].fiksnikrediti;
+		}
+		for(var i = 0; i < this.predmeti1z.length; i++){
+			this.predmeti1z[i].krediti = this.predmeti1z[i].fiksnikrediti;
+		}
+		for(var i = 0; i < this.predmeti2z.length; i++){
+			this.predmeti2z[i].krediti = this.predmeti2z[i].fiksnikrediti;
+		}
+		for(var i = 0; i < this.predmeti3z.length; i++){
+			this.predmeti3z[i].krediti = this.predmeti3z[i].fiksnikrediti;
+		}
+		this.diplomska.krediti = this.diplomska.fiksnikrediti;
+	}
 	this.reinit = function(){
+		this.sesija++;
+		if(this.sesija == 3){
+			this.resetPredmeti();
+			this.sesija = 0;
+			this.godina++;			
+		}		
 		this.gameoverBack.remove();
 		this.gameoverText.remove();
 		this.setMap();
 		this.base.init(this.h);
 		this.ball.init(350,350);
+		jQuery("#ime").text(this.name);
+		jQuery("#sesija").text("Сесија: " + this.sesii[this.sesija]);
+		jQuery("#godina").text("Година на полагање:" + this.godina)
 	}
 	this.init = function(predmeti1i,predmeti2i,predmeti3i,predmeti1z,predmeti2z,predmeti3z,diplomska,name,ball,base,h,w,background){
 		this.h = h;
@@ -39,7 +69,7 @@ function Player(){
 		this.base = base;
 		this.ball = ball;
 		this.setMap();
-		this.ball.init(350,350);	
+		this.ball.init(350,this.h);	
 		/*var test = [];
 		for(var i = 0; i <31; i++ ){
 			var p = new Predmet("111","ime",5);
@@ -49,7 +79,7 @@ function Player(){
 		//var map = new Map(200,1000,"#EEEEEE");
 		map.init(test);*/
 	}
-	this.setMap = function(initial){
+	this.setMap = function(){
 		var predmeti = [];
 		if(this.predmeti1z[0].polozen && this.predmeti1z[1].polozen){
 			this.predmeti2z[0].otvoren = true;
@@ -109,8 +139,8 @@ function Player(){
 		predmeti[0].otvoren = flag;
 			this.map.init(predmeti);	
 	}
-	this.gameOver = function(){
-		if(this.ball.ball.position.y + this.ball.dy >= this.base.base.bounds.y){
+	this.gameOver = function(flag){
+		if(this.ball.ball.position.y + this.ball.dy >= this.base.base.bounds.y || flag){
 			this.gameoverBack = new Path.Rectangle(new Rectangle(new Point(0,0),new Size(1000,1000)));
 			this.gameoverBack.fillColor = "#EEEEEE";
 			this.gameoverText = new PointText(new Point(10,300));
@@ -218,12 +248,14 @@ function Map(h,w,b){
 				this.grouptext.addChild(text);
 			}else if(predmeti[i].otvoren){
 				path.fillColor = this.colorotvoreni;
+				text.fillColor = 'black'
 				text.content = predmeti[i].ID + " - " + predmeti[i].krediti;
 				this.groupitems.addChild(path);
 				this.grouptext.addChild(text);
 			}else{
 				path.fillColor = this.colorzatvoreni;
-				//text.content = predmeti[i].ID + " - " + predmeti[i].krediti;
+				text.fillColor = 'white'
+				text.content = predmeti[i].ID + " - " + predmeti[i].krediti;
 				this.groupitems.addChild(path);
 				this.grouptext.addChild(text);
 			}
@@ -237,6 +269,7 @@ function Map(h,w,b){
 			this.dx *= -1;
 		}
 		this.groupitems.children[0].position.x += this.dx;
+		this.grouptext.children[0].position.x += this.dx;
 	}
 	this.touchElement = function(ball,baseImg){
 		var y = ball.ball.position.y;
@@ -347,8 +380,10 @@ function Ball(){
 	this.speed = 4;
 	this.basicspeed = Math.sqrt(2);
 	this.init = function(corX,corY){
-		this.ball = new Path.Circle(new Point(corX,corY),15);
-		this.ball.fillColor = "#0000DD";						
+		this.ball = new Path.Circle(new Point(corX,corY * 0.8),15);
+		this.ball.fillColor = "#0000DD";
+		if(this.dy > 0) this.dy *= -1;
+		this.touchBase(Math.sqrt(2)/2,true)				
 	}
 	this.moveBall = function(){
 		this.ball.position.x += this.dx;

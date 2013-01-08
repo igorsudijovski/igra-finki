@@ -1,5 +1,8 @@
 paper.install(window);
 window.onload = function(){
+	
+	jQuery('tr:nth-child(even)').addClass('alt');
+	jQuery("#next").attr('disabled', 'disabled' ).addClass( 'ui-state-disabled' );
 	paper.setup('myCanvas');
 	var accordion = 0;
 	var canvas = document.getElementById('myCanvas');
@@ -11,10 +14,39 @@ window.onload = function(){
 	var ball = new Ball();
 	var tool = new Tool();
 	var base = new Base();
-	jQuery("#reinit").click(function(){
+	var n = 200;
+    var odo;
+	jQuery("#end").click(function(){
+		ply.gameOver(true);
+		draw = false;
+		jQuery("#next").removeAttr('disabled').removeClass( 'ui-state-disabled' );
+		n = 0.1
+	})
+	jQuery("#next").click(function(){
 		ply.reinit();
 		draw = true;
+		jQuery("#next").attr('disabled', 'disabled' ).addClass( 'ui-state-disabled' );
+		n = 200;
 	});
+
+    function run() {
+    	var ctx = document.getElementById('odometar').getContext('2d');
+        odo = new odometer(ctx, {height: 60, digits: 3, decimals: 0, value: n, wobbleFactor: 0.00 });
+        update();
+        }
+    function update() {
+    	if(n < 0.7 && n > 0.5){
+    		ply.gameOver(true);
+			draw = false;
+			jQuery("#next").removeAttr('disabled').removeClass( 'ui-state-disabled' );
+			n = 0.1
+        }else{
+            n -= 0.01
+        }
+        			console.log(n);  	
+        odo.setValue(n);
+        setTimeout(update, 10);            		
+    } 
 	base.init(canvas.height);
 	jQuery("#accordion").accordion({event:"mouseclick"});
 	jQuery("#dialog").dialog({
@@ -94,7 +126,11 @@ window.onload = function(){
 				ply = new Player();
 				ply.init(predmeti1i, predmeti2i, predmeti3i, predmeti1z, predmeti2z, predmeti3z, diplomska, namePly, ball, base, canvas.height,canvas.width,"#EEEEEE");
 				draw = true;
-				jQuery(this).dialog("close");													
+				jQuery("#ime").text(ply.name);
+				jQuery("#sesija").text("Сесија: " + ply.sesii[0]);
+				jQuery("#godina").text("Година на полагање: " + ply.godina);
+				run();
+				jQuery(this).dialog("close");											
 				}else{
 					if(accordion == 0){
 						var sum = 0;
@@ -152,8 +188,10 @@ window.onload = function(){
 			ply.map.touchElement(ply.ball,ply.base);
 			ply.base.move(basex);
 			ply.map.moveDiplomska();
-			if(ply.gameOver()){
+			if(ply.gameOver(false)){
 				draw = false;
+				jQuery("#next").removeAttr('disabled').removeClass( 'ui-state-disabled' );
+				n = 0.1;
 			}
 		}		
 	}
