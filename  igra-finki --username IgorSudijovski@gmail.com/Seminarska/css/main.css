@@ -22,3 +22,38 @@ body { font-size: 66%; }
 .alt{
 	background-color: #ccc;
 }
+.info{
+	float: left;
+	margin: 10px; 
+	border: 10px solid; 
+	padding: 10px; 
+	border-radius: 20px;
+	background-image: -webkit-linear-gradient(270deg, gray 10%, white 100%); 
+	background-image: -moz-linear-gradient(270deg, gray 10%, white 100%); 
+}
+body{
+	background-image: url(../img/pozadina.PNG);
+	background-repeat: repeat;
+}
+.canvas{
+	float: left;
+	margin: 10px;
+	min-height: 500;
+	max-height: 800;
+	min-width: 800;
+	max-width: 1200;
+	height: 600;
+	width: 1000
+}
+#pozadina{
+	background-image: url(../img/finki.PNG);
+	background-repeat: no-repeat;
+	height: 100px;
+	margin-left: 60px;
+}
+#logo{
+	z-index: -1;
+	position: absolute;
+	left: 200px;
+	top: 200px
+}
